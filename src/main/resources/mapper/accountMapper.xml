@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anda.persistence.db.mapper.AccountMapper">
+
+    <resultMap id="walletAccountResultMap" type="com.anda.persistence.model.Account">
+        <id column="id" property="id"/>
+        <result column="user_id" property="userId"/>
+        <result column="type" property="type"/>
+        <result column="account_id" property="accountId"/>
+        <result column="account_name" property="accountName"/>
+        <result column="sequence_id" property="sequenceId"/>
+        <result column="transaction_id" property="transactionId"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.anda.persistence.model.Account">
+        INSERT INTO tb_account
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="type != null">type,</if>
+            <if test="accountId != null">account_id,</if>
+            <if test="accountName != null">account_name,</if>
+            <if test="sequenceId != null">sequence_id,</if>
+            <if test="transactionId != null">transaction_id,</if>
+            <if test="createdAt != null">created_at,</if>
+            <if test="updatedAt != null">updated_at,</if>
+        </trim>
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="type != null">#{type},</if>
+            <if test="accountId != null">#{accountId},</if>
+            <if test="accountName != null">#{accountName},</if>
+            <if test="sequenceId != null">#{sequenceId},</if>
+            <if test="transactionId != null">#{transactionId},</if>
+            <if test="createdAt != null">#{createdAt},</if>
+            <if test="updatedAt != null">#{updatedAt},</if>
+        </trim>
+    </insert>
+
+    <insert id="insertList" parameterType="com.anda.persistence.model.Account">
+        INSERT INTO tb_account
+        (user_id, `type`, account_id, account_name, sequence_id, transaction_id, created_at, updated_at)
+        VALUES
+        <foreach collection="list" item="it" index="index" separator=",">
+            ( #{it.userId}, #{it.type}, #{it.accountId}, #{it.accountName}, #{it.sequenceId}, #{it.transactionId},
+            #{it.createdAt}, #{it.updatedAt} )
+        </foreach>
+    </insert>
+
+    <select id="findByAccountId" resultMap="walletAccountResultMap">
+        select * from tb_account where user_id=#{arg0} and account_id=#{arg1}
+    </select>
+
+
+</mapper>

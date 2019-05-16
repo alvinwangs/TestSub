@@ -1,0 +1,130 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="create_tables" author="alvin">
+
+
+        <createTable tableName="tb_account" remarks="用户账户表">
+            <column name="id" type="BIGINT UNSIGNED" autoIncrement="true" remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="transaction_id" type="VARCHAR(255)" defaultValue="" remarks="内部唯一id">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="用户ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(100)" defaultValue="" remarks="账户类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="账户ID">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="account_name" type="VARCHAR(255)" defaultValue="" remarks="子账户名称">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sequence_id" type="BIGINT UNSIGNED" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="创建日期，时间戳（13位）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="更新日期，时间戳（13位）">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="tb_asset" remarks="用户资产表">
+            <column name="id" type="BIGINT UNSIGNED" autoIncrement="true" remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="用户ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="账户ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency_id" type="INT UNSIGNED" defaultValueNumeric="0" remarks="币种ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(100)" defaultValue="" remarks="类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="balance" type="Decimal(24,15)" defaultValueNumeric="0" remarks="余额">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sequence_id" type="BIGINT UNSIGNED" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="创建日期，时间戳（13位）">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="更新日期，时间戳（13位）">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="tb_transaction" remarks="流水表">
+            <column name="id" type="BIGINT UNSIGNED" autoIncrement="true" remarks="id">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="transaction_id" type="VARCHAR(255)" defaultValue="" remarks="内部唯一id">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="用户ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="account_id" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="账户ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency_id" type="INT UNSIGNED" defaultValueNumeric="0" remarks="币种ID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="change_event" type="VARCHAR(100)" defaultValue="" remarks="类型">
+                <constraints nullable="false"/>
+            </column>
+            <column name="change_amount" type="Decimal(24,15)" defaultValueNumeric="0" remarks="变动金额">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="before_balance" type="Decimal(24,15)" defaultValueNumeric="0" remarks="变动前余额">
+                <constraints nullable="false"/>
+            </column>
+            <column name="after_balance" type="Decimal(24,15)" defaultValueNumeric="0" remarks="变动前余额">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sequence_id" type="BIGINT UNSIGNED" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="BIGINT UNSIGNED" defaultValueNumeric="0" remarks="创建日期，时间戳（13位）">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci"/>
+        </modifySql>
+    </changeSet>
+
+
+    <changeSet id="accountAndAssetAndTransactionIndex" author="alvin">
+
+        <createIndex tableName="tb_asset" indexName="asset_account_currency" unique="true">
+            <column name="account_id"/>
+            <column name="currency_id"/>
+        </createIndex>
+        <createIndex tableName="tb_account" indexName="asset_account_currency" unique="true">
+            <column name="account_id"/>
+            <column name="type"/>
+        </createIndex>
+        <createIndex tableName="tb_transaction" indexName="asset_account_currency" unique="true">
+            <column name="account_id"/>
+            <column name="change_event"/>
+            <column name="transaction_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,69 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="create_tables" author="alvin">
+        <comment>init schema</comment>
+
+
+        <createTable tableName="tb_fills_history">
+            <column name="id" type="BIGINT UNSIGNED" autoIncrement="true" startWith="0">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="sequence_id" type="BIGINT UNSIGNED" remarks="id for openOrder">
+            </column>
+            <column name="user_id" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+            <column name="portfolio_id" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+            <column name="contract_id" remarks="contact id for order" type="BIGINT UNSIGNED"
+                    defaultValueNumeric="0"/>
+            <column name="side" type="INT" defaultValueNumeric="0"/>
+            <column name="trade_source" type="VARCHAR(30)" defaultValue=""/>
+            <column name="order_id" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+            <column name="trade_id" remarks="id of this traded" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+            <column name="is_taker" remarks="taker or maker of this  order" type="Boolean"
+                    defaultValueBoolean="false"/>
+            <column name="fill_quantity" remarks="fill quantity of  order" type="Decimal(10,4)"
+                    defaultValueNumeric="0"/>
+
+            <column name="fill_price" remarks="fill price of  order" type="Decimal(24,15)"
+                    defaultValueNumeric="0"/>
+
+            <column name="fill_value" remarks="fill value of  order" type="Decimal(24,15)"
+                    defaultValueNumeric="0"/>
+
+            <column name="fee" remarks="fill fee " type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="fee_rate" type="Decimal(24,15)" defaultValueNumeric="0"/>
+
+            <column name="remain_qty_limit" type="Decimal(10,4)" defaultValueNumeric="0"/>
+            <column name="remain_qty" type="Decimal(10,4)" defaultValueNumeric="0"/>
+            <column name="remain_hidden_qty" type="Decimal(10,4)" defaultValueNumeric="0"/>
+            <column name="remain_cost_limit" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="event_id" type="INT" defaultValueNumeric="0"/>
+            <column name="settle_currency" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+
+
+            <column name="client_order_id" type="varchar(100)"/>
+            <column name="create_time" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+
+        </createTable>
+
+
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci"/>
+        </modifySql>
+    </changeSet>
+
+
+    <changeSet id="myTradesIndex" author="alvin">
+        <createIndex tableName="tb_fills_history" indexName="fills_tradeId_userId" unique="true">
+            <column name="trade_id"/>
+            <column name="user_id"/>
+            <column name="order_id"/>
+        </createIndex>
+
+
+    </changeSet>
+
+</databaseChangeLog>

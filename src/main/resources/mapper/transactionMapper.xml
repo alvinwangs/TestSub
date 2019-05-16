@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anda.persistence.db.mapper.TransactionMapper">
+
+    <resultMap id="walletTransResultMap" type="com.anda.persistence.model.Transaction">
+        <id column="id" property="id"/>
+        <result column="sequence_id" property="sequenceId"/>
+        <result column="user_id" property="userId"/>
+        <result column="currency_id" property="currency"/>
+        <result column="account_id" property="accountId"/>
+        <result column="before_balance" property="beforeBalance"/>
+        <result column="after_balance" property="afterBalance"/>
+        <result column="change_amount" property="changeAmount"/>
+        <result column="transaction_id" property="transactionId"/>
+        <result column="change_event" property="changeEvent"/>
+        <result column="created_at" property="createTime"/>
+
+    </resultMap>
+    <insert id="insert" parameterType="com.anda.persistence.model.Transaction">
+        insert  into tb_transaction(
+            sequence_id,
+            user_id,
+            currency_id,
+            account_id,
+            before_balance,
+            after_balance,
+            change_amount,
+            transaction_id,
+            change_event,
+            created_at
+        )
+        VALUES (
+            #{sequenceId},
+            #{userId},
+            #{currency},
+            #{accountId},
+            #{beforeBalance},
+            #{afterBalance},
+            #{changeAmount},
+            #{transactionId},
+            #{changeEvent},
+            #{createTime}
+        )
+    </insert>
+    <insert id="insertList" parameterType="com.anda.persistence.model.Transaction">
+        insert into tb_transaction(
+        sequence_id,
+        user_id,
+        currency_id,
+        account_id,
+        before_balance,
+        after_balance,
+        change_amount,
+        transaction_id,
+        change_event,
+        created_at
+        )
+        VALUES
+        <foreach collection="list" item="it" index="index" separator=",">
+            (
+            #{it.sequenceId},
+            #{it.userId},
+            #{it.currency},
+            #{it.accountId},
+            #{it.beforeBalance},
+            #{it.afterBalance},
+            #{it.changeAmount},
+            #{it.transactionId},
+            #{it.changeEvent},
+            #{it.createTime}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

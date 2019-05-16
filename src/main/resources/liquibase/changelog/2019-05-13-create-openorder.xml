@@ -1,0 +1,101 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="create_tables" author="alvin">
+        <comment>init schema</comment>
+
+        <createTable tableName="tb_open_orders" remarks="for openOrder and history">
+            <column name="id" type="BIGINT UNSIGNED" autoIncrement="true" startWith="0" remarks="id for openOrder">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="sequence_id" type="BIGINT UNSIGNED" remarks="id for openOrder">
+            </column>
+            <column name="user_id" remarks="unique id for each user" type="BIGINT UNSIGNED"
+                    defaultValueNumeric="0"/>
+            <column name="wallet_id" remarks="unique id for each user" type="BIGINT UNSIGNED"
+                    defaultValueNumeric="0"/>
+            <column name="portfolio_id" remarks="sub account for user" type="BIGINT UNSIGNED"
+                    defaultValueNumeric="0"/>
+
+
+            <column name="contract_id" remarks="contact id for order" type="BIGINT UNSIGNED"
+                    defaultValueNumeric="0"/>
+            <column name="settle_currency" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+
+            <column name="trigger_by" type="INT UNSIGNED" defaultValueNumeric="0"/>
+
+            <column name="order_id" remarks="id for order" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+            <column name="client_order_id" remarks="client id for order" type="varchar(100)"
+                    defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+            <column name="trade_id" remarks="id of this traded" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+            <column name="order_type" type="INT" defaultValueNumeric="0"/>
+
+            <column name="side" type="INT" defaultValueNumeric="0" remarks="1 BUY,2 SELL"/>
+            <column name="order_price" remarks="price when order" type="BIGINT UNSIGNED"
+            defaultValueNumeric="0"/>
+
+
+            <column name="quantity" remarks="quantity of this order" type="Decimal(10,4)"
+                    defaultValueNumeric="0"/>
+            <column name="hidden_quantity" remarks="hidden quantity of hidden order" type="Decimal(10,4)"
+                    defaultValueNumeric="0"/>
+            <column name="quantity_limit" remarks="only quantity can be trade" type="Decimal(10,4)"
+                    defaultValueNumeric="0"/>
+            <column name="cost_limit" remarks="only so much money can be trade" type="Decimal(24,15)"
+                    defaultValueNumeric="0"/>
+
+            <column name="cancelled_quantity" remarks="cancelled quantity of  order" type="Decimal(10,4)"
+                    defaultValueNumeric="0"/>
+            <column name="cancelled_hidden_qty" type="Decimal(10,4)" defaultValueNumeric="0"/>
+
+            <column name="filled_quantity" type="Decimal(10,4)" defaultValueNumeric="0"/>
+            <column name="filled_value" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="avg_filled_price" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="total_fee" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="is_taker" type="Boolean" defaultValueBoolean="false"/>
+
+            <column name="remain_qty_limit" type="Decimal(10,4)" defaultValueNumeric="0"/>
+            <column name="remain_qty" type="Decimal(10,4)" defaultValueNumeric="0"/>
+            <column name="remain_hidden_qty" type="Decimal(10,4)" defaultValueNumeric="0"/>
+            <column name="remain_cost_limit" type="Decimal(24,15)" defaultValueNumeric="0"/>
+
+            <column name="is_must_fill_in_full" type="Boolean" defaultValueBoolean="false"/>
+            <column name="is_rest_on_book" type="Boolean" defaultValueBoolean="false"/>
+            <column name="is_hidden_first" type="Boolean" defaultValueBoolean="false"/>
+            <column name="is_specified_price" type="Boolean" defaultValueBoolean="false"/>
+            <column name="is_post_only" type="Boolean" defaultValueBoolean="false"/>
+
+            <column name="expire_after_millisecond" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+            <column name="expiration" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+            <column name="self_trade_policy" type="INT" defaultValueNumeric="0"/>
+
+            <column name="error" remarks="state of order" type="INT" defaultValueNumeric="0"/>
+            <column name="status" remarks="status of this order" type="VARCHAR(20)"
+                    defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fill_status" type="VARCHAR(30)" defaultValue=""/>
+
+            <column name="create_time" remarks="timestamp when order" type="BIGINT UNSIGNED"
+                    defaultValueNumeric="0"/>
+            <column name="update_time" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+
+        </createTable>
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci"/>
+        </modifySql>
+    </changeSet>
+
+
+    <changeSet id="openOrderIndex" author="alvin">
+        <createIndex tableName="tb_open_orders" indexName="openorders_orderId" unique="true">
+            <column name="order_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

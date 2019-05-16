@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.anda.persistence.db.mapper.PositionMapper">
+
+    <resultMap id="openOrderResultMap" type="com.anda.persistence.model.Position">
+        <id column="id" property="id"/>
+        <result column="last_sequence_id" property="sequenceId"/>
+        <result column="user_id" property="userId"/>
+        <result column="wallet_id" property="walletId"/>
+        <result column="portfolio_id" property="portfolioId"/>
+        <result column="position_id" property="positionId"/>
+        <result column="contract_id" property="contractId"/>
+        <result column="settle_currency" property="settleCurrency"/>
+        <result column="size" property="size"/>
+        <result column="cost" property="cost"/>
+        <result column="long_size" property="longSize"/>
+        <result column="long_cost" property="longCost"/>
+        <result column="short_size" property="shortSize"/>
+        <result column="short_cost" property="shortCost"/>
+        <result column="realised_pnl" property="realisedPnl"/>
+        <result column="accrued_interest" property="accruedInterest"/>
+        <result column="accrued_timestamp" property="accruedTimestamp"/>
+        <result column="settled_interest" property="settledInterest"/>
+        <result column="settled_interest_fee" property="settledInterestFee"/>
+        <result column="interest_fee" property="interestFee"/>
+        <result column="trade_fee" property="tradeFee"/>
+        <result column="status" property="status"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.anda.persistence.model.Position">
+        INSERT  INTO tb_positions(last_sequence_id,
+        user_id,wallet_id,  portfolio_id,position_id, contract_id, settle_currency,
+        size,cost,
+        realised_pnl,accrued_interest,accrued_timestamp,
+        settled_interest,settled_interest_fee,
+        interest_fee,status,create_time,update_time,long_size,long_cost,short_size,short_cost,trade_fee
+        )
+        VALUES (
+          #{sequenceId},
+          #{userId},
+          #{walletId},
+          #{portfolioId},
+          #{positionId},
+          #{contractId},
+          #{settleCurrency},
+
+          #{size},
+          #{cost},
+          #{realisedPnl},
+          #{accruedInterest},
+          #{accruedTimestamp},
+          #{settledInterest},
+          #{settledInterestFee},
+          #{interestFee},
+          #{status},
+          #{createTime},
+          #{updateTime},
+          #{longSize},
+          #{longCost},
+          #{shortSize},
+          #{shortCost},
+          #{tradeFee}
+        )
+    </insert>
+    <insert id="insertList" parameterType="it.unimi.dsi.fastutil.objects.ReferenceArrayList">
+        INSERT INTO tb_positions(last_sequence_id,
+        user_id,wallet_id, portfolio_id,position_id, contract_id, settle_currency,
+        size,cost,realised_pnl,accrued_interest,accrued_timestamp,
+        settled_interest,settled_interest_fee,
+        interest_fee,status,long_size,long_cost,short_size,short_cost,trade_fee
+        )
+        VALUES
+        <foreach collection="list" item="it" index="index" separator=",">
+            (
+            #{it.sequenceId},
+            #{it.userId},
+            #{it.walletId},
+            #{it.portfolioId},
+            #{it.positionId},
+            #{it.contractId},
+            #{it.settleCurrency},
+            #{it.size},
+            #{it.cost},
+            #{it.realisedPnl},
+            #{it.accruedInterest},
+            #{it.accruedTimestamp},
+            #{it.settledInterest},
+            #{it.settledInterestFee},
+            #{it.interestFee},
+            #{it.status},
+            #{it.longSize},
+            #{it.longCost},
+            #{it.shortSize},
+            #{it.shortCost},
+            #{it.tradeFee}
+            )
+        </foreach>
+
+    </insert>
+    <update id="update" parameterType="com.anda.persistence.model.Position">
+        update  tb_positions set
+        last_sequence_id = #{sequenceId},
+        size = #{size},
+        cost = #{cost},
+        realised_pnl=#{realisedPnl},
+        accrued_interest = #{accruedInterest},
+        accrued_timestamp = #{accruedTimestamp},
+        settled_interest = #{settledInterest},
+        settled_interest_fee = #{settledInterestFee},
+        interest_fee = #{interestFee},
+        status = #{status},
+        long_size=#{longSize},
+        long_cost=#{longCost},
+        short_size=#{shortSize},
+        short_cost=#{shortCost},
+        trade_fee=#{tradeFee}
+        where position_id=#{positionId}
+    </update>
+
+    <select id="find" resultMap="openOrderResultMap">
+        select *
+        from tb_positions
+        where position_id = #{arg0}
+    </select>
+
+</mapper>

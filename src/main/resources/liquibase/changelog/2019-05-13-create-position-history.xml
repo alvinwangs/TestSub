@@ -1,0 +1,59 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="create_tables" author="alvin">
+        <comment>init schema</comment>
+
+
+        <createTable tableName="tb_position_history">
+            <column name="id" type="BIGINT" startWith="0" autoIncrement="true">
+                <constraints unique="true" primaryKey="true"/>
+            </column>
+            <column name="sequence_id" type="BIGINT UNSIGNED" defaultValueNumeric="0">
+            </column>
+
+            <column name="position_id" defaultValueNumeric="0" type="BIGINT UNSIGNED"/>
+            <column name="trade_id" type="BIGINT UNSIGNED" defaultValueNumeric="0"/>
+
+            <column name="change_size" defaultValueNumeric="0" type="Decimal(10,4)"/>
+            <column name="before_size" type="Decimal(10,4)" defaultValueNumeric="0"/>
+            <column name="before_cost" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="before_realised_pnl" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="before_interest" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="before_trade_fee" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="before_settled_interest" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="before_settled_interest_fee" type="Decimal(24,15)" defaultValueNumeric="0"/>
+
+            <column name="after_size" defaultValueNumeric="0" type="Decimal(10,4)"/>
+            <column name="after_cost" defaultValueNumeric="0" type="Decimal(24,15)"/>
+            <column name="after_realised_pnl" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="after_settled_interest" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="after_settled_interest_fee" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="after_trade_fee" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="after_interest_fee" type="Decimal(24,15)" defaultValueNumeric="0"/>
+            <column name="trigger_by" type="INT" defaultValueNumeric="0"/>
+            <column name="create_time" type="BIGINT UNSIGNED" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci"/>
+        </modifySql>
+    </changeSet>
+
+
+    <changeSet id="persistence_index" author="alvin">
+
+        <createIndex tableName="tb_position_history" indexName="position_id" unique="true">
+            <column name="position_id"/>
+            <column name="trade_id"/>
+        </createIndex>
+
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,0 +1,15 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <include file="changelog/2019-05-13-create-sysconf.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2019-05-13-create-position.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2019-05-13-create-position-history.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2019-05-13-create-openorder.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2019-05-13-create-mytrades.xml" relativeToChangelogFile="true"/>
+    <include file="changelog/2019-05-13-create-account_asset_transaction.xml" relativeToChangelogFile="true"/>
+
+    <!-- todo 修改UserProfiles表tempData字段名，以及检查其他表有问题的字段和结构 -->
+
+</databaseChangeLog>

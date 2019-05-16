@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+    <changeSet id="create_tables" author="alvin">
+
+        <createTable tableName="tb_system_conf">
+            <column name="id" type="BIGINT UNSIGNED" autoIncrement="true">
+                <constraints unique="true" primaryKey="true"/>
+            </column>
+            <column name="key" type="varchar(100)">
+                <constraints unique="true"/>
+            </column>
+            <column name="value" type="varchar(250)"/>
+            <column name="message" type="varchar(250)" remarks="description fot this key and value "/>
+        </createTable>
+
+
+        <modifySql dbms="mysql">
+            <append value=" ENGINE=INNODB DEFAULT CHARSET utf8mb4 COLLATE utf8mb4_general_ci"/>
+        </modifySql>
+    </changeSet>
+
+
+
+</databaseChangeLog>

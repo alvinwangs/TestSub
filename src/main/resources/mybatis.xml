@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="prod">
+        <environment id="prod">
+            <transactionManager type="JDBC"/>
+            <dataSource type="com.anda.persistence.db.DruidDataSourceFactory">
+                <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <mapper resource="mapper/openOrderMapper.xml"/>
+        <mapper resource="mapper/fillsMapper.xml"/>
+        <mapper resource="mapper/positionMapper.xml"/>
+        <mapper resource="mapper/systemConfMapper.xml"/>
+        <mapper resource="mapper/accountMapper.xml"/>
+        <mapper resource="mapper/assetMapper.xml"/>
+        <mapper resource="mapper/transactionMapper.xml"/>
+        <mapper resource="mapper/positionHistoryMapper.xml"/>
+    </mappers>
+</configuration>
