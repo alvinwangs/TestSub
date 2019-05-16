@@ -6,7 +6,7 @@
     <environments default="prod">
         <environment id="prod">
             <transactionManager type="JDBC"/>
-            <dataSource type="com.anda.persistence.db.DruidDataSourceFactory">
+            <dataSource type="com.anda.persistence.com.anda.sub.db.DruidDataSourceFactory">
                 <property name="driverClass" value="com.mysql.jdbc.Driver"/>
             </dataSource>
         </environment>
