@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.anda.persistence.db.mapper.PositionMapper">
+<mapper namespace="com.anda.sub.db.mapper.PositionMapper">
 
-    <resultMap id="openOrderResultMap" type="com.anda.persistence.model.Position">
+    <resultMap id="openOrderResultMap" type="com.anda.sub.model.Position">
         <id column="id" property="id"/>
         <result column="last_sequence_id" property="sequenceId"/>
         <result column="user_id" property="userId"/>
@@ -27,7 +27,7 @@
         <result column="status" property="status"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.anda.persistence.model.Position">
+    <insert id="insert" parameterType="com.anda.sub.model.Position">
         INSERT  INTO tb_positions(last_sequence_id,
         user_id,wallet_id,  portfolio_id,position_id, contract_id, settle_currency,
         size,cost,
@@ -62,42 +62,8 @@
           #{tradeFee}
         )
     </insert>
-    <insert id="insertList" parameterType="it.unimi.dsi.fastutil.objects.ReferenceArrayList">
-        INSERT INTO tb_positions(last_sequence_id,
-        user_id,wallet_id, portfolio_id,position_id, contract_id, settle_currency,
-        size,cost,realised_pnl,accrued_interest,accrued_timestamp,
-        settled_interest,settled_interest_fee,
-        interest_fee,status,long_size,long_cost,short_size,short_cost,trade_fee
-        )
-        VALUES
-        <foreach collection="list" item="it" index="index" separator=",">
-            (
-            #{it.sequenceId},
-            #{it.userId},
-            #{it.walletId},
-            #{it.portfolioId},
-            #{it.positionId},
-            #{it.contractId},
-            #{it.settleCurrency},
-            #{it.size},
-            #{it.cost},
-            #{it.realisedPnl},
-            #{it.accruedInterest},
-            #{it.accruedTimestamp},
-            #{it.settledInterest},
-            #{it.settledInterestFee},
-            #{it.interestFee},
-            #{it.status},
-            #{it.longSize},
-            #{it.longCost},
-            #{it.shortSize},
-            #{it.shortCost},
-            #{it.tradeFee}
-            )
-        </foreach>
 
-    </insert>
-    <update id="update" parameterType="com.anda.persistence.model.Position">
+    <update id="update" parameterType="com.anda.sub.model.Position">
         update  tb_positions set
         last_sequence_id = #{sequenceId},
         size = #{size},

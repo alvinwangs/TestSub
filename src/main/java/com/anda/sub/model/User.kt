@@ -1,4 +1,4 @@
-package sub.model
+package com.anda.sub.model
 
 open class User(){
 

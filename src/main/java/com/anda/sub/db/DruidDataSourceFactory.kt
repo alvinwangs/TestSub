@@ -1,7 +1,7 @@
-package sub.db
+package com.anda.sub.db
 
 import com.alibaba.druid.pool.DruidDataSource
-import sub.config.Properties
+import com.anda.sub.config.Properties
 import org.apache.ibatis.datasource.pooled.PooledDataSourceFactory
 
 

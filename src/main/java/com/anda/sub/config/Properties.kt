@@ -1,4 +1,4 @@
-package sub.config
+package com.anda.sub.config
 
 
 object Properties {

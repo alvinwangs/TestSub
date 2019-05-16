@@ -1,6 +1,6 @@
-package sub.db.mapper
+package com.anda.sub.db.mapper
 
-import sub.model.Position
+import com.anda.sub.model.Position
 
 interface PositionMapper {
     fun insert(position: Position): Int
