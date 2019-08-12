@@ -12,6 +12,7 @@ class ApplicationTest {
 
 
 
+
         val started = Application(true).start()
         assertTrue(started)
     }
