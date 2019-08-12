@@ -9,6 +9,7 @@ class ApplicationTest {
     @Test
     fun shouldStarted() {
         println("shouldStarted")
+
         val started = Application(true).start()
         assertTrue(started)
     }
