@@ -11,6 +11,7 @@ class ApplicationTest {
         println("shouldStarted")
 
 
+
         val started = Application(true).start()
         assertTrue(started)
     }
