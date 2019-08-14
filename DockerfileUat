@@ -11,4 +11,5 @@ ADD agent/skywalking/optional-plugins/ /root/skywalking-agent/optional-plugins/
 ADD agent/skywalking/plugins/ /root/skywalking-agent/plugins/
 ADD agent/skywalking/skywalking-agent.jar /root/skywalking-agent/skywalking-agent.jar
 
+
 ENV JAR_PATH "/root/root.war"
