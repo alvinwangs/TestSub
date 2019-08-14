@@ -1,0 +1,14 @@
+#FROM java:openjdk-8-jdk-alpine
+FROM gcr.io/leverup-app-uat/java:jdk8_v2
+ADD ./target/*-dependencies.jar /root/root.jar
+
+ADD agent/MyPerf4J-ASM-2.5.0.jar /root/MyPerf4J-ASM.jar
+ADD agent/myPerf4J.properties /root/myPerf4J.properties
+
+ADD agent/skywalking/activations/ /root/skywalking-agent/activations/
+ADD agent/skywalking/config/ /root/skywalking-agent/config/
+ADD agent/skywalking/optional-plugins/ /root/skywalking-agent/optional-plugins/
+ADD agent/skywalking/plugins/ /root/skywalking-agent/plugins/
+ADD agent/skywalking/skywalking-agent.jar /root/skywalking-agent/skywalking-agent.jar
+
+ENV JAR_PATH "/root/root.war"
